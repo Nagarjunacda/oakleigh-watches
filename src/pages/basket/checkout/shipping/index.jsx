@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import ProgressiveImageComp from '@/reuseComps/ProgressiveImageComp'
 import Breadcrumbs from '@/components/BreadCrumbs'
+import { getCartUrl } from '@/utils/urls'
 import CheckoutItems from '@/components/CheckOut/CheckoutItems'
 import ShippingPage from '@/components/CheckOut/ShippingPage'
 import CheckBox from '@/reuseComps/CheckBox'
@@ -26,7 +27,7 @@ function Shipping() {
         // const username = 'lejac53041@tanlanav.com'
         // const password = 'GPYM l0x4 kojE iW1e 2JhR Enj2'
         const response = await fetch(
-          'https://oakleigh.cda-development3.co.uk/cms/wp-json/wc/store/v1/cart',
+          getCartUrl,
           {
             method: 'get',
             headers,

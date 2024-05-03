@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Toast from '@/reuseComps/ToastMessage'
+import { updateCusUrl } from '@/utils/urls'
 import Link from 'next/link'
 import CountrySelector from '@/reuseComps/CountrySelector'
 import ProgressiveImageComp from '@/reuseComps/ProgressiveImageComp'
@@ -214,7 +215,7 @@ function ShippingAddress({
       }
       const finalData = isFromPayment ? onlyBillingData : postData
       const response = await fetch(
-        'https://oakleigh.cda-development3.co.uk/cms/wp-json/wc/store/v1/cart/update-customer',
+        updateCusUrl,
         {
           method: 'POST',
           headers,
@@ -238,7 +239,7 @@ function ShippingAddress({
         // setAddingDeliveryInfo(false)
         // setIsPostcodeEntered(!isPostcodeEntered)
       }
-    } catch (error) {}
+    } catch (error) { }
   }
 
   return (

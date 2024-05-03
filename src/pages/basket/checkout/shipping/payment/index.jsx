@@ -5,6 +5,9 @@ import { useRouter } from 'next/router'
 import Toast from '@/reuseComps/ToastMessage'
 import { useStripe } from '@stripe/react-stripe-js'
 import { Base64 } from 'js-base64'
+import { wpPaymentUpdateUrl } from '@/utils/urls'
+import { getCartUrl } from '@/utils/urls'
+import { checkoutUrl } from '@/utils/urls'
 import ShippingAddress from '@/components/CheckOut/ShippingAddress'
 import ProgressiveImageComp from '@/reuseComps/ProgressiveImageComp'
 import PaymentSection from '@/components/CheckOut/PaymentSection'
@@ -14,6 +17,7 @@ import ShippingPage from '@/components/CheckOut/ShippingPage'
 import CheckBox from '@/reuseComps/CheckBox'
 import Spinner from '@/reuseComps/Spinner'
 import OverlayWindow from '@/reuseComps/OverlayComp'
+import { check } from 'prettier'
 
 function BillingBlock({
   handlePayment,
@@ -52,7 +56,7 @@ function BillingBlock({
             <section onClick={handleAddress}>
               <CheckBox
                 isChecked={isShippingAddress}
-                // setIsChecked={setIsShippingAddress}
+              // setIsChecked={setIsShippingAddress}
               />
             </section>
             <p>Same as shipping address</p>
@@ -61,7 +65,7 @@ function BillingBlock({
             <section onClick={handleAddress}>
               <CheckBox
                 isChecked={isBillingAddress}
-                // setIsChecked={setIsBillingAddress}
+              // setIsChecked={setIsBillingAddress}
               />
             </section>
             <p>Use a different billing address</p>
@@ -281,7 +285,7 @@ function Payment() {
                   stripe_cc_save_source_key: false,
                   stripe_cc_token_key: nextAction?.paymentIntent?.id,
                 }
-                const url = `https://oakleigh.cda-development3.co.uk/cms/wp-json/custom/v1/trigger-ajax/?order_id=${result?.order_id}&order_key=${result?.order_key}`
+                const url = `${wpPaymentUpdateUrl}/?order_id=${result?.order_id}&order_key=${result?.order_key}`
 
                 const res = await fetch(url, {
                   method: 'get',
@@ -397,7 +401,7 @@ function Payment() {
     try {
       setIsPaymentProcessing(true)
       const response = await fetch(
-        'https://oakleigh.cda-development3.co.uk/cms/wp-json/wc/store/v1/checkout',
+        checkoutUrl,
         {
           method: 'POST',
           headers,
@@ -434,7 +438,7 @@ function Payment() {
         // const username = 'lejac53041@tanlanav.com'
         // const password = 'GPYM l0x4 kojE iW1e 2JhR Enj2'
         const response = await fetch(
-          'https://oakleigh.cda-development3.co.uk/cms/wp-json/wc/store/v1/cart',
+          getCartUrl,
           {
             method: 'get',
             headers,

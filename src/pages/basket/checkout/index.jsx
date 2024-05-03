@@ -4,6 +4,8 @@ import Breadcrumbs from '@/components/BreadCrumbs'
 import ExpressCheckout from '@/components/CheckOut/ExpressCheckout'
 import ShippingAddress from '@/components/CheckOut/ShippingAddress'
 import CheckoutLogin from '@/components/CheckOut/CheckoutLogin'
+import { checkoutUrl } from '@/utils/urls'
+import { getCartUrl } from '@/utils/urls'
 import axios from 'axios'
 import ProgressiveImageComp from '@/reuseComps/ProgressiveImageComp'
 import Toast from '@/reuseComps/ToastMessage'
@@ -156,7 +158,7 @@ function CheckoutPage() {
     }
     try {
       const response = await fetch(
-        'https://oakleigh.cda-development3.co.uk/cms/wp-json/wc/store/v1/checkout',
+        checkoutUrl,
         {
           method: 'POST',
           headers,
@@ -213,7 +215,7 @@ function CheckoutPage() {
   //       // const username = 'lejac53041@tanlanav.com'
   //       // const password = 'GPYM l0x4 kojE iW1e 2JhR Enj2'
   //       const response = await fetch(
-  //         'https://oakleigh.cda-development3.co.uk/cms/wp-json/wc/store/v1/checkout',
+  //         checkoutUrl,
   //         {
   //           method: 'get',
   //           headers,
@@ -251,7 +253,7 @@ function CheckoutPage() {
         // const username = 'lejac53041@tanlanav.com'
         // const password = 'GPYM l0x4 kojE iW1e 2JhR Enj2'
         const response = await fetch(
-          'https://oakleigh.cda-development3.co.uk/cms/wp-json/wc/store/v1/cart',
+          getCartUrl,
           {
             method: 'get',
             headers,

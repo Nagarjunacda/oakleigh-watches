@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { getNonce } from '@/utils/nonce'
 import { useMediaQuery } from 'react-responsive'
+import { loginPostUrl } from '@/utils/urls'
 import Toast from '@/reuseComps/ToastMessage'
 import Spinner from '@/reuseComps/Spinner'
 
@@ -53,7 +54,7 @@ function LoginDropdown({ handleSuccessfulLogin, handleCreateAcc }) {
     try {
       setIsLoggingIn(true)
       const response = await fetch(
-        'https://oakleigh.cda-development3.co.uk/cms/wp-json/jwt-auth/v1/token',
+        loginPostUrl,
         {
           method: 'POST',
           headers: {

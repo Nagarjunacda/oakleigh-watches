@@ -1,6 +1,7 @@
 import ProgressiveImageComp from '@/reuseComps/ProgressiveImageComp'
 import Spinner from '@/reuseComps/Spinner'
 import Toast from '@/reuseComps/ToastMessage'
+import { couponCodeUrl } from '@/utils/urls'
 import { priceFormatter } from '@/utils/formatPrice'
 import { useState } from 'react'
 
@@ -48,7 +49,7 @@ function CheckoutItems({ basketData, setAddOrRemovePromo, addOrRemovePromo }) {
     try {
       setAddingPromo(true)
       const response = await fetch(
-        `https://oakleigh.cda-development3.co.uk/cms/wp-json/wc/store/v1/cart/coupons?code=${coupon}`,
+        `${couponCodeUrl}?code=${coupon}`,
         {
           method: 'post',
           headers,
@@ -65,7 +66,7 @@ function CheckoutItems({ basketData, setAddOrRemovePromo, addOrRemovePromo }) {
           return
         }
       }
-    } catch (error) {}
+    } catch (error) { }
   }
 
   const handleRemoveCoupon = async () => {
@@ -79,7 +80,7 @@ function CheckoutItems({ basketData, setAddOrRemovePromo, addOrRemovePromo }) {
     try {
       setRemovingPromo(true)
       const response = await fetch(
-        `https://oakleigh.cda-development3.co.uk/cms/wp-json/wc/store/v1/cart/coupons?code=${coupon}`,
+        `${couponCodeUrl}?code=${coupon}`,
         {
           method: 'delete',
           headers,
@@ -91,7 +92,7 @@ function CheckoutItems({ basketData, setAddOrRemovePromo, addOrRemovePromo }) {
         setRemovingPromo(false)
         setAddOrRemovePromo(!addOrRemovePromo)
       }
-    } catch (error) {}
+    } catch (error) { }
   }
 
   const handleChange = (e) => {

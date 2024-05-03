@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import axios from 'axios'
+import { shopAllUrl } from '@/utils/urls'
 import { useMediaQuery } from 'react-responsive'
 import { newInUrl } from '@/utils/urls'
 import Filters from '@/reuseComps/Filters'
@@ -23,7 +24,7 @@ const ProductListing = ({ data }) => {
   //       const username = 'ck_96e01d53953b1372491dc07807ed0f0bd896d3a3'
   //       const password = 'cs_e6dc67bafbc6907125843f189e2c377eb1a40606'
   //       const response = await axios.get(
-  //         `https://oakleigh.cda-development3.co.uk/cms/wp-json/wc/v3/products?page=${page}`,
+  //         `${shopAllUrl}?page=${page}`,
   //         {
   //           headers: {
   //             'Content-Type': 'text/plain',

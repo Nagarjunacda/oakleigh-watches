@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useMediaQuery } from 'react-responsive'
+import { nonceUrl } from '@/utils/urls'
+import { addToCartUrl } from '@/utils/urls'
+import { shopAllUrl } from '@/utils/urls'
 import ProgressiveImageComp from '@/reuseComps/ProgressiveImageComp'
 import AvailabilityBadge from '@/reuseComps/AvailabilityBadge'
 import AvailabilityBlock from '@/components/ProductPage/AvailabilityBlock'
@@ -68,7 +71,7 @@ function ProductDetailPage({ data }) {
       }
       try {
         const response = await fetch(
-          'https://oakleigh.cda-development3.co.uk/cms/wp-json/wp/v2/wc-nonce',
+          nonceUrl,
           {
             method: 'get',
             headers,
@@ -115,7 +118,7 @@ function ProductDetailPage({ data }) {
       //   const password = 'QsJY lkVy QxL8 3iFY NhhP Cto1'
       setLoadingToast(true)
       const response = await fetch(
-        'https://oakleigh.cda-development3.co.uk/cms/wp-json/wc/store/v1/cart/add-item',
+        addToCartUrl,
         {
           method: 'POST',
           headers,
@@ -313,7 +316,7 @@ export async function getServerSideProps(context) {
     const username = 'ck_96e01d53953b1372491dc07807ed0f0bd896d3a3'
     const password = 'cs_e6dc67bafbc6907125843f189e2c377eb1a40606'
     const response = await fetch(
-      `https://oakleigh.cda-development3.co.uk/cms/wp-json/wc/v3/products/${productId}`,
+      `${shopAllUrl}/${productId}`,
       {
         method: 'get',
         headers: {

@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react'
+import { getCartUrl } from '@/utils/urls'
 
 const CartdataContext = createContext()
 
@@ -15,7 +16,7 @@ export const CartDataProvider = ({ children }) => {
       }
       try {
         const response = await fetch(
-          'https://oakleigh.cda-development3.co.uk/cms/wp-json/wc/store/v1/cart',
+          getCartUrl,
           {
             method: 'get',
             headers,
@@ -26,7 +27,7 @@ export const CartDataProvider = ({ children }) => {
         if (responseData) {
           setCartData(responseData)
         }
-      } catch (error) {}
+      } catch (error) { }
     }
     getCartData()
   }, [])

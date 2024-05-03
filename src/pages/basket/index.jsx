@@ -5,6 +5,10 @@ import Link from 'next/link'
 import { priceFormatter } from '@/utils/formatPrice'
 import { useMediaQuery } from 'react-responsive'
 import { Country, State, City } from 'country-state-city'
+import { removeCartItemUrl } from '@/utils/urls'
+import { getCartUrl } from '@/utils/urls'
+import { couponCodeUrl } from '@/utils/urls'
+import { updateCusUrl } from '@/utils/urls'
 import NextImage from '@/reuseComps/NextImage'
 import ProgressiveImageComp from '@/reuseComps/ProgressiveImageComp'
 import CountrySelector from '@/reuseComps/CountrySelector'
@@ -35,11 +39,10 @@ function BasketHead({ checkout, textFieldRef }) {
         YOUR BASKET
       </section>
       <section
-        className={`flex h-auto w-full ${
-          checkout
-            ? 'cursor-pointer opacity-100'
-            : 'cursor-not-allowed opacity-50'
-        } flex-1 justify-end `}
+        className={`flex h-auto w-full ${checkout
+          ? 'cursor-pointer opacity-100'
+          : 'cursor-not-allowed opacity-50'
+          } flex-1 justify-end `}
         role="button"
       >
         <section
@@ -86,7 +89,7 @@ function ProductDetail({ productData, setIsCartEmpty }) {
       //   const password = 'QsJY lkVy QxL8 3iFY NhhP Cto1'
       // setLoadingToast(true)
       const response = await fetch(
-        `https://oakleigh.cda-development3.co.uk/cms/wp-json/wc/store/v1/cart/remove-item?key=${itemKey}`,
+        `${removeCartItemUrl}?key=${itemKey}`,
         {
           method: 'POST',
           headers,
@@ -105,7 +108,7 @@ function ProductDetail({ productData, setIsCartEmpty }) {
       } else {
         const errorData = await response.json()
       }
-    } catch (error) {}
+    } catch (error) { }
   }
 
   return (
@@ -166,9 +169,9 @@ function ProductDetail({ productData, setIsCartEmpty }) {
         <Link
           href={'/shop-all'}
           className="flex h-auto w-full cursor-pointer items-center justify-start border-y-[1.2px] border-y-search py-[30px] font-sans text-display-4 xl:text-display-17"
-          // onClick={() => {
-          //   router.push('/shop-all')
-          // }}
+        // onClick={() => {
+        //   router.push('/shop-all')
+        // }}
         >
           <u>Continue Shopping</u>
         </Link>
@@ -215,7 +218,7 @@ function OrderSummary({ isPostcodeEntered, checkout, textFieldRef }) {
         // const username = 'lejac53041@tanlanav.com'
         // const password = 'GPYM l0x4 kojE iW1e 2JhR Enj2'
         const response = await fetch(
-          'https://oakleigh.cda-development3.co.uk/cms/wp-json/wc/store/v1/cart',
+          getCartUrl,
           {
             method: 'get',
             headers,
@@ -245,7 +248,7 @@ function OrderSummary({ isPostcodeEntered, checkout, textFieldRef }) {
     try {
       setRemovingPromo(true)
       const response = await fetch(
-        `https://oakleigh.cda-development3.co.uk/cms/wp-json/wc/store/v1/cart/coupons?code=${coupon}`,
+        `${couponCodeUrl}?code=${coupon}`,
         {
           method: 'delete',
           headers,
@@ -257,7 +260,7 @@ function OrderSummary({ isPostcodeEntered, checkout, textFieldRef }) {
         setRemovingPromo(false)
         setAddOrRemovePromo(!addOrRemovePromo)
       }
-    } catch (error) {}
+    } catch (error) { }
   }
 
   const handleSubmit = async (e) => {
@@ -278,7 +281,7 @@ function OrderSummary({ isPostcodeEntered, checkout, textFieldRef }) {
     try {
       setAddingPromo(true)
       const response = await fetch(
-        `https://oakleigh.cda-development3.co.uk/cms/wp-json/wc/store/v1/cart/coupons?code=${coupon}`,
+        `${couponCodeUrl}?code=${coupon}`,
         {
           method: 'post',
           headers,
@@ -295,7 +298,7 @@ function OrderSummary({ isPostcodeEntered, checkout, textFieldRef }) {
           return
         }
       }
-    } catch (error) {}
+    } catch (error) { }
   }
 
   const handleChange = (e) => {
@@ -403,11 +406,10 @@ function OrderSummary({ isPostcodeEntered, checkout, textFieldRef }) {
         </section>
       </section>
       <section
-        className={`relative ${
-          checkout
-            ? 'cursor-pointer opacity-100'
-            : 'cursor-not-allowed opacity-50'
-        } flex h-[42px] font-sans
+        className={`relative ${checkout
+          ? 'cursor-pointer opacity-100'
+          : 'cursor-not-allowed opacity-50'
+          } flex h-[42px] font-sans
         lg:mx-auto lg:h-[53px] lg:w-[90%]`}
         role="button"
         onClick={handleCheckout}
@@ -532,7 +534,7 @@ function Delivery({
       try {
         setAddingDeliveryInfo(true)
         const response = await fetch(
-          'https://oakleigh.cda-development3.co.uk/cms/wp-json/wc/store/v1/cart/update-customer',
+          updateCusUrl,
           {
             method: 'POST',
             headers,
@@ -557,7 +559,7 @@ function Delivery({
             'Postcode added successfully, you can proceed to checkout',
           )
         }
-      } catch (error) {}
+      } catch (error) { }
       return
     }
     if (
@@ -605,7 +607,7 @@ function Delivery({
     try {
       setAddingDeliveryInfo(true)
       const response = await fetch(
-        'https://oakleigh.cda-development3.co.uk/cms/wp-json/wc/store/v1/cart/update-customer',
+        updateCusUrl,
         {
           method: 'POST',
           headers,
@@ -629,7 +631,7 @@ function Delivery({
         )
         // setIsPostcodeEntered(!isPostcodeEntered)
       }
-    } catch (error) {}
+    } catch (error) { }
     return
   }
 
@@ -646,9 +648,8 @@ function Delivery({
       />
       <section className="h-auto w-full">
         <form
-          className={`flex ${
-            isOrderFromUk ? 'flex-row' : 'flex-col'
-          } h-auto w-full gap-4 dxl:gap-5`}
+          className={`flex ${isOrderFromUk ? 'flex-row' : 'flex-col'
+            } h-auto w-full gap-4 dxl:gap-5`}
           onSubmit={handleSubmit}
         >
           {isOrderFromUk ? (
@@ -792,7 +793,7 @@ function YourBasket() {
         // const username = 'lejac53041@tanlanav.com'
         // const password = 'GPYM l0x4 kojE iW1e 2JhR Enj2'
         const response = await fetch(
-          'https://oakleigh.cda-development3.co.uk/cms/wp-json/wc/store/v1/cart',
+          getCartUrl,
           {
             method: 'get',
             headers,
